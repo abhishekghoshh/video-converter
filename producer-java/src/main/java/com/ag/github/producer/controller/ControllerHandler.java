@@ -35,7 +35,7 @@ public class ControllerHandler {
     }
 
     @RequestMapping(path = "/convert/to-audio", method = RequestMethod.POST, consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity control(HttpServletRequest httpServletRequest)
+    public ResponseEntity<?> control(HttpServletRequest httpServletRequest)
             throws Exception {
         DomainModel domainModel = new DomainModel(httpServletRequest);
         try {
