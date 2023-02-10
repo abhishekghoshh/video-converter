@@ -1,0 +1,29 @@
+server:
+  port: 8080
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+
+api-def:
+  videoToAudioConverter:
+    path: /convert/to-audio
+    method: POST
+    requestBodyClass: null
+    service-def:
+      - name: validation
+        classes:
+          - com.ag.github.producer.service.Validate
+        strategy: SEQUENTIAL
+        endState: true
+      - name: save
+        classes:
+          - com.ag.github.producer.service.SaveToDBRule
+          - com.ag.github.producer.service.AddToKafkaRule
+        strategy: PARALLEL
+        endState: false
+      - name: save
+        classes:
+          - com.ag.github.producer.service.PrepareResponseRule
+        strategy: SEQUENTIAL
+        endState: true

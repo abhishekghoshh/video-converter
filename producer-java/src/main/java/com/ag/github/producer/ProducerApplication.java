@@ -1,4 +1,4 @@
-package com.ag.github.converterjava;
+package com.ag.github.producer;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

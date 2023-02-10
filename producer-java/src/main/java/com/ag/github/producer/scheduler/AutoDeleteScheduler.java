@@ -1,31 +1,38 @@
-package com.ag.github.converterjava.controller;
+package com.ag.github.producer.scheduler;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import ws.schild.jave.AudioAttributes;
 import ws.schild.jave.Encoder;
 import ws.schild.jave.EncodingAttributes;
 import ws.schild.jave.MultimediaObject;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.util.UUID;
 
-@RestController
-@RequestMapping("/convert")
-public class ProducerController {
+@Component
+public class AutoDeleteScheduler {
+    @Scheduled(fixedRate = 3000)
+    public void autoDelete() {
+        File file = new File("media");
+        if (file.isDirectory()) {
+            String[] names = file.list();
+            for (String name : names) {
+                File innerFile = new File("media/" + name);
+                if ((innerFile.getName().endsWith("mp3") || innerFile.getName().endsWith("mp4")) && innerFile.delete())
+                    System.out.println(innerFile.getName() + " is deleted successfully");
+            }
+        }
+    }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/to-audio")
-    public ResponseEntity<InputStreamResource> convertToAudio(HttpServletRequest requestEntity) throws Exception {
-        InputStream inputStream = requestEntity.getInputStream();
+    public void convertToAudio() throws IOException {
+        HttpServletRequest httpServletRequest = null;
+        InputStream inputStream = httpServletRequest.getInputStream();
         String sourceFileName = UUID.randomUUID() + ".mp4";
         File source = new File("media/" + sourceFileName);
         FileOutputStream fileOutputStream = new FileOutputStream(source);
@@ -34,7 +41,7 @@ public class ProducerController {
         fileOutputStream.flush();
         fileOutputStream.close();
 
-        String destinationFileName= UUID.randomUUID() + ".mp3";
+        String destinationFileName = UUID.randomUUID() + ".mp3";
         File target = new File("media/" + destinationFileName);
         AudioAttributes audio = new AudioAttributes();
         audio.setCodec("aac");
@@ -59,7 +66,7 @@ public class ProducerController {
         header.add("Pragma", "no-cache");
         header.add("Expires", "0");
 
-        return ResponseEntity.ok()
+        ResponseEntity<InputStreamResource> responseEntity = ResponseEntity.ok()
                 .headers(header)
                 .contentLength(target.length())
                 .contentType(MediaType.parseMediaType("application/octet-stream"))

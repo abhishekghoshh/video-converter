@@ -1,4 +1,4 @@
-package com.ag.github.converterjava;
+package com.ag.github.producer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
