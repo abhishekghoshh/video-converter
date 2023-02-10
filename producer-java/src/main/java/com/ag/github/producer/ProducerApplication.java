@@ -17,12 +17,4 @@ public class ProducerApplication implements CommandLineRunner {
 	public static void main(String[] args) {
 		SpringApplication.run(ProducerApplication.class, args);
 	}
-
-	@Autowired
-	ReactorDefination reactorDefination;
-
-	@Override
-	public void run(String... args) throws Exception {
-//		System.out.println(reactorDefination.getApidef());
-	}
 }
