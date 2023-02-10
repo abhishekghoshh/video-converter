@@ -49,8 +49,8 @@ public class ReactorConfiguration implements ImportAware, WebMvcConfigurer {
 		return executor;
 	}
 
-	@Bean("objectMapper")
-	public ObjectMapper jsonMapper() {
+	@Bean("coreObjectMapper")
+	public ObjectMapper coreObjectMapper() {
 		return new ObjectMapper();
 	}
 

@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -13,13 +15,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class ObjectMatcher {
+
+	@Autowired
+	@Qualifier("coreObjectMapper")
+	private ObjectMapper mapper;
+
 	private static final String BLANK_SPACE = "";
 	private static final String VALUES = "values";
 	private static final String SPECAIL_CHAR_STAR = "*";
 
 	public boolean check(Object expected, Object actual) throws JsonMappingException, JsonProcessingException {
 		if (ifBothNonEmpty(expected, actual)) {
-			ObjectMapper mapper = new ObjectMapper();
 			Object expectedResponse = mapper.readValue(mapper.writeValueAsString(expected), Object.class);
 			Object actualResponse = mapper.readValue(mapper.writeValueAsString(actual), Object.class);
 			return checkForClass(expectedResponse, actualResponse);
