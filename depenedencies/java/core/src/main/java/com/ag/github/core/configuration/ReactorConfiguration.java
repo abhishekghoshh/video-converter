@@ -15,7 +15,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Configuration
@@ -39,7 +38,7 @@ public class ReactorConfiguration implements ImportAware, WebMvcConfigurer {
 		registry.addInterceptor(reactorInterceptor);
 	}
 
-	@Bean("threadPoolTaskExecutor")
+	@Bean("reactorThreadPool")
 	public TaskExecutor getAsyncExecutor() {
 		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
 		executor.setCorePoolSize(20);

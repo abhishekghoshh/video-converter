@@ -15,5 +15,4 @@ import org.springframework.context.annotation.Import;
 @Import({ ReactorConfiguration.class })
 @Configuration
 public @interface Reactor {
-
 }
