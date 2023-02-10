@@ -5,25 +5,16 @@ spring:
     pathmatch:
       matching-strategy: ANT_PATH_MATCHER
 
-api-def:
-  videoToAudioConverter:
-    path: /convert/to-audio
-    method: POST
-    requestBodyClass: null
-    service-def:
-      - name: validation
-        classes:
-          - com.ag.github.producer.service.Validate
-        strategy: SEQUENTIAL
-        endState: true
-      - name: save
-        classes:
-          - com.ag.github.producer.service.SaveToDBRule
-          - com.ag.github.producer.service.AddToKafkaRule
-        strategy: PARALLEL
-        endState: false
-      - name: save
-        classes:
-          - com.ag.github.producer.service.PrepareResponseRule
-        strategy: SEQUENTIAL
-        endState: true
+reactor:
+  properties:
+    apidef:
+      videoToAudioConverter:
+        path: /convert/to-audio
+        method: POST
+        requestBodyClass: null
+        servicedef:
+          - name: convertToAudio
+            classes:
+              - com.ag.github.producer.rule.ConverterRule
+            strategy: SEQUENTIAL
+            endState: true
