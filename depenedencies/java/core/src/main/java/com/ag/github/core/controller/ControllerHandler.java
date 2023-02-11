@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +35,8 @@ public class ControllerHandler {
 	@Autowired
 	ReactorDefination reactorDefination;
 
+	private static final Logger log = LoggerFactory.getLogger(ControllerHandler.class);
+
 	public ControllerHandler(@Autowired RequestMappingHandlerMapping requestMappingHandlerMapping,
 			@Autowired ReactorDefination reactorDefination,
 			@Autowired ApplicationContextManager applicationContextManager)
@@ -51,6 +55,9 @@ public class ControllerHandler {
 			String apidefKey = apidefEntry.getKey();
 			apidef.setKey(buildApiKey(apidef.getPath(), apidef.getMethod().toString()));
 			apiEntryMap.put(apidef.getKey(), apidefKey);
+
+			log.info("api-key is {}, api-def-key is {}, api {}, method {} ", apidef.getKey(), apidefKey,
+					apidef.getPath(), apidef.getMethod());
 
 			requestMappingHandlerMapping.registerMapping(
 					RequestMappingInfo.paths(apidef.getPath()).methods(apidef.getMethod()).consumes(MediaType.ALL_VALUE)
@@ -72,7 +79,7 @@ public class ControllerHandler {
 	}
 
 	private String buildApiKey(String path, String method) {
-		return method + path.replace('/', '_');
+		return method + path.replace('/', '_').replace('-', '_').toUpperCase();
 	}
 
 	public ResponseEntity<?> control(HttpServletRequest httpServletRequest) throws Exception {

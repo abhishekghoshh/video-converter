@@ -1,0 +1,17 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: producer
+  config:
+    name: producer
+    use-legacy-processing: true
+  profiles:
+    active: default
+  cloud:
+    config:
+      name: producer
+      enabled: false
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
