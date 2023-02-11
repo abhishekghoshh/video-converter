@@ -5,6 +5,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +37,14 @@ public class ReactorConfiguration implements ImportAware, WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(reactorInterceptor);
+	}
+
+	@Bean
+	public FilterRegistrationBean<ReactorFiler> loggingFilter(@Autowired ReactorFiler reactorFiler) {
+		FilterRegistrationBean<ReactorFiler> registrationBean = new FilterRegistrationBean<>();
+		registrationBean.setFilter(reactorFiler);
+		registrationBean.addUrlPatterns("*");
+		return registrationBean;
 	}
 
 	@Bean("reactorThreadPool")

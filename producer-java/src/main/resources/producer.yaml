@@ -1,3 +1,11 @@
 spring:
   profiles:
     include: apidef
+logging:
+  pattern:
+    console: "%d{dd-MM-yyyy HH:mm:ss.SSS}|%level|%logger.%M|%X{sid}|%X{uuid}|%X{uri}|%X{method}|%msg%n"
+  level:
+    root: INFO
+    com.ag.github.producer: debug
+    com.ag.github.core: DEBUG
+    

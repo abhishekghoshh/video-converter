@@ -23,7 +23,6 @@ public class DomainModel {
 	private Map<String, List<String>> requestParams;
 	private Object requestBody;
 	private ResponseEntity<?> responseEntity;
-	private List<ExceptionBlock> exceptionBlocks = new ArrayList<>();
 
 	private Map<String, Object> runtimeData;
 
@@ -91,16 +90,6 @@ public class DomainModel {
 
 	public DomainModel setResponseEntity(ResponseEntity<?> responseEntity) {
 		this.responseEntity = responseEntity;
-		return this;
-	}
-
-	public List<ExceptionBlock> getExceptionBlocks() {
-		return exceptionBlocks;
-	}
-
-	public DomainModel setException(Exception exception, String stepKey, String ruleClassName) {
-		this.exceptionBlocks
-				.add(new ExceptionBlock(exception, "" + System.currentTimeMillis(), stepKey, ruleClassName));
 		return this;
 	}
 

@@ -2,12 +2,15 @@ reactor:
   properties:
     apidef:
       videoToAudioConverter:
+        active: true
         path: /convert/to-audio
         method: POST
+        hasDefaultResponse: false
+        defaultResponse: '{}'
         requestBodyClass: null
         servicedef:
-          - name: convertToAudio
-            classes:
-              - com.ag.github.producer.rule.ConverterRule
-            strategy: SEQUENTIAL
-            endState: true
+        - name: convertToAudio
+          classes:
+          - com.ag.github.producer.rule.ConverterRule
+          strategy: null
+          endState: true

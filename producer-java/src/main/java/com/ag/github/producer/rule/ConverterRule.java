@@ -10,7 +10,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.ag.github.core.model.DomainModel;
 import com.ag.github.core.rule.Rule;
@@ -21,7 +21,7 @@ import ws.schild.jave.Encoder;
 import ws.schild.jave.EncodingAttributes;
 import ws.schild.jave.MultimediaObject;
 
-@Component
+@Service
 public class ConverterRule implements Rule {
 
 	@Override

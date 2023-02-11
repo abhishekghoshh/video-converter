@@ -2,7 +2,6 @@ package com.ag.github.core.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -19,7 +18,6 @@ import org.springframework.web.util.pattern.PathPatternParser;
 import com.ag.github.core.configuration.ReactorDefination;
 import com.ag.github.core.model.ApiDef;
 import com.ag.github.core.model.DomainModel;
-import com.ag.github.core.model.ExceptionBlock;
 import com.ag.github.core.model.ServiceDef;
 import com.ag.github.core.rule.Rule;
 import com.ag.github.core.service.ApplicationContextManager;
@@ -41,41 +39,39 @@ public class ControllerHandler {
 			@Autowired ReactorDefination reactorDefination,
 			@Autowired ApplicationContextManager applicationContextManager)
 			throws NoSuchMethodException, ClassNotFoundException {
-
-		RequestMappingInfo.BuilderConfiguration options = new RequestMappingInfo.BuilderConfiguration();
-		options.setPatternParser(new PathPatternParser());
-
-		Map<String, String> apiEntryMap = new HashMap<>();
-		Map<String, ApiDef> apidefs = reactorDefination.getApidef();
-		for (Map.Entry<String, ApiDef> apidefEntry : apidefs.entrySet()) {
-			ApiDef apidef = apidefEntry.getValue();
-			if (null == apidef.getPath() && null == apidef.getMethod())
-				throw new RuntimeException();
-
-			String apidefKey = apidefEntry.getKey();
-			apidef.setKey(buildApiKey(apidef.getPath(), apidef.getMethod().toString()));
-			apiEntryMap.put(apidef.getKey(), apidefKey);
-
-			log.info("api-key is {}, api-def-key is {}, api {}, method {} ", apidef.getKey(), apidefKey,
-					apidef.getPath(), apidef.getMethod());
-
-			requestMappingHandlerMapping.registerMapping(
-					RequestMappingInfo.paths(apidef.getPath()).methods(apidef.getMethod()).consumes(MediaType.ALL_VALUE)
-							.produces(MediaType.ALL_VALUE).options(options).build(),
-					this, ControllerHandler.class.getMethod("control", HttpServletRequest.class));
-
-			if (CollectionUtils.isEmpty(apidef.getServicedef()))
-				throw new RuntimeException("Service definition can not be empty");
-			for (ServiceDef servicedef : apidef.getServicedef()) {
-				if (CollectionUtils.isEmpty(servicedef.getClasses()))
-					throw new RuntimeException("Class list is empty for " + servicedef.getName());
-				if (CollectionUtils.isEmpty(servicedef.getRules()))
-					servicedef.setRules(new ArrayList<>());
-				for (String className : servicedef.getClasses())
-					servicedef.addRule((Rule) applicationContextManager.get(Class.forName(className)));
+		if (!CollectionUtils.isEmpty(reactorDefination.getApidef())) {
+			Map<String, ApiDef> apidefs = reactorDefination.getApidef();
+			RequestMappingInfo.BuilderConfiguration options = new RequestMappingInfo.BuilderConfiguration();
+			options.setPatternParser(new PathPatternParser());
+			Map<String, String> apiEntryMap = new HashMap<>();
+			for (Map.Entry<String, ApiDef> apidefEntry : apidefs.entrySet()) {
+				ApiDef apidef = apidefEntry.getValue();
+				String apidefKey = apidefEntry.getKey();
+				if (!apidef.isActive())
+					continue;
+				if (null == apidef.getPath() && null == apidef.getMethod())
+					throw new RuntimeException("api path or method is empty for " + apidefKey);
+				apidef.setKey(buildApiKey(apidef.getPath(), apidef.getMethod().toString()));
+				apiEntryMap.put(apidef.getKey(), apidefKey);
+				log.info("api-key is {}, api-def-key is {}, api {}, method {} ", apidef.getKey(), apidefKey,
+						apidef.getPath(), apidef.getMethod());
+				requestMappingHandlerMapping.registerMapping(
+						RequestMappingInfo.paths(apidef.getPath()).methods(apidef.getMethod())
+								.consumes(MediaType.ALL_VALUE).produces(MediaType.ALL_VALUE).options(options).build(),
+						this, ControllerHandler.class.getMethod("control", HttpServletRequest.class));
+				if (CollectionUtils.isEmpty(apidef.getServicedef()))
+					throw new RuntimeException("Service definition can not be empty");
+				for (ServiceDef servicedef : apidef.getServicedef()) {
+					if (CollectionUtils.isEmpty(servicedef.getClasses()))
+						throw new RuntimeException("Class list is empty for " + servicedef.getName());
+					if (CollectionUtils.isEmpty(servicedef.getRules()))
+						servicedef.setRules(new ArrayList<>());
+					for (String className : servicedef.getClasses())
+						servicedef.addRule((Rule) applicationContextManager.get(Class.forName(className)));
+				}
 			}
+			reactorDefination.setApiEntryMap(apiEntryMap);
 		}
-		reactorDefination.setApiEntryMap(apiEntryMap);
 	}
 
 	private String buildApiKey(String path, String method) {
@@ -92,12 +88,13 @@ public class ControllerHandler {
 		else
 			domainModel = new DomainModel(httpServletRequest);
 		handlerService.handle(domainModel, apiDef.getServicedef());
-		if (!CollectionUtils.isEmpty(domainModel.getExceptionBlocks()))
-			throw buildException(domainModel.getExceptionBlocks());
-		return domainModel.getResponseEntity();
-	}
-
-	private Exception buildException(List<ExceptionBlock> exceptionBlocks) {
-		return null;
+		if (null != domainModel.getResponseEntity())
+			return domainModel.getResponseEntity();
+		if (apiDef.isHasDefaultResponse()) {
+			log.debug("no response set by the rules");
+			return ResponseEntity.noContent().build();
+		}
+		log.debug("default response is off");
+		return ResponseEntity.internalServerError().build();
 	}
 }
