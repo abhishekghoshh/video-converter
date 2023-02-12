@@ -11,6 +11,6 @@ reactor:
         servicedef:
         - name: convertToAudio
           classes:
-          - com.github.ag.producer.rule.ConverterRule
+          - io.github.abhishekghoshh.producer.rule.ConverterRule
           strategy: null
           endState: true

@@ -6,6 +6,6 @@ logging:
     console: "%d{dd-MM-yyyy HH:mm:ss.SSS}|%level|%logger.%M|%X{sid}|%X{uuid}|%X{uri}|%X{method}|%msg%n"
   level:
     root: INFO
-    com.github.ag.producer: debug
-    com.github.ag.core: DEBUG
+    io.github.abhishekghoshh.producer: debug
+    io.github.abhishekghoshh.core: DEBUG
     
