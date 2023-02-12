@@ -18,3 +18,5 @@ mvn clean deploy
 https://s01.oss.sonatype.org/#nexus-search;quick~abhishekghosh -> for finding all the version
 https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/abhishekghoshh -> only for snapshots
 https://repo1.maven.org/maven2/io/github/abhishekghoshh/ -> for other version management
+https://central.sonatype.com/
+https://central.sonatype.com/artifact/io.github.abhishekghoshh/core/0.0.1/overview
