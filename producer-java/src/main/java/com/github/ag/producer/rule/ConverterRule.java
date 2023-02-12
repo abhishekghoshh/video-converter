@@ -60,7 +60,6 @@ public class ConverterRule implements Rule {
 		header.add("Cache-Control", "no-cache, no-store, must-revalidate");
 		header.add("Pragma", "no-cache");
 		header.add("Expires", "0");
-
 		ResponseEntity<InputStreamResource> responseEntity = ResponseEntity.ok().headers(header)
 				.contentLength(target.length()).contentType(MediaType.parseMediaType("application/octet-stream"))
 				.body(resource);
