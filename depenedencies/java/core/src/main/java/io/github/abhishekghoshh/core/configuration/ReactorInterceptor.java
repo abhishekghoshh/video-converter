@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.Nullable;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,13 +34,15 @@ public class ReactorInterceptor implements HandlerInterceptor {
 	@Override
 	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler,
 			@Nullable Exception ex) throws Exception {
-		Map<String, String> context = MDC.getCopyOfContextMap();
-		long responseTime = System.currentTimeMillis() - Long.valueOf(context.get("startTime"));
-		String uuid = context.get("uuid");
-		log.debug("transaction completed for uuid {}", uuid);
-		log.info("ResponseCode={}|ResponseTime={}ms", response.getStatus(), responseTime);
-		ThreadContext.clearMap();
-		MDC.clear();
+		if (!CollectionUtils.isEmpty(MDC.getCopyOfContextMap())) {
+			Map<String, String> context = MDC.getCopyOfContextMap();
+			long responseTime = System.currentTimeMillis() - Long.valueOf(context.get("startTime"));
+			String uuid = context.get("uuid");
+			log.debug("transaction completed for uuid {}", uuid);
+			log.info("ResponseCode={}|ResponseTime={}ms", response.getStatus(), responseTime);
+			ThreadContext.clearMap();
+			MDC.clear();
+		}
 	}
 
 }

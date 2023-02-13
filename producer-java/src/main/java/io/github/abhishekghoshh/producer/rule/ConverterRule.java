@@ -6,6 +6,8 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -22,9 +24,11 @@ import ws.schild.jave.MultimediaObject;
 
 @Service
 public class ConverterRule implements Rule {
+	private static final Logger log = LoggerFactory.getLogger(ConverterRule.class);
 
 	@Override
 	public void process(DomainModel domainModel) throws Exception {
+		log.info("http servelet request class {}", domainModel.getHttpServletRequest().getClass());
 		HttpServletRequest httpServletRequest = domainModel.getHttpServletRequest();
 		InputStream inputStream = httpServletRequest.getInputStream();
 		String sourceFileName = UUID.randomUUID() + ".mp4";

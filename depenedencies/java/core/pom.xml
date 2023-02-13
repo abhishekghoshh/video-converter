@@ -10,6 +10,7 @@
 	<groupId>io.github.abhishekghoshh</groupId>
 	<artifactId>core</artifactId>
 	<version>1.0-SNAPSHOT</version>
+	<!--<version>0.0.4</version> -->
 	<name>core</name>
 	<description>core library for all spring boot project</description>
 	<url>https://github.com/abhishekghoshh/video-converter/tree/master/depenedencies/java/core</url>

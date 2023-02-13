@@ -9,7 +9,7 @@
 	</parent>
 	<groupId>io.github.abhishekghoshh</groupId>
 	<artifactId>producer-java</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.1</version>
 	<name>Producer-java</name>
 	<description>Producer for mongodb gridFS and kafka queue message</description>
 	<properties>
