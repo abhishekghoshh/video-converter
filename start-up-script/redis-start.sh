@@ -4,7 +4,7 @@
 docker run -d \
   -h redis \
   -e REDIS_PASSWORD=I5k4kQdExcbYCTpDNQyzc6H7yQRWwuQM \
-  -v /redis/data:/data:rw \
+  -v C:/Users/ghosh/OneDrive/Desktop/projects/github-projects/video-converter/data/redis:/data:rw \
   -p 6379:6379 \
   --name redis \
   --restart always \
