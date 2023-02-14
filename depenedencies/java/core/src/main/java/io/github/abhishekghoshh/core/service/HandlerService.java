@@ -81,7 +81,7 @@ public class HandlerService {
 		try {
 			rule.process(domainModel);
 		} catch (Exception exception) {
-			log.debug("exection {}, service def name {}, rule class name {}", exception.getMessage(),
+			log.debug("exeption {}, service def name {}, rule class name {}", exception.getMessage(),
 					serviceDef.getName(), rule.getClass().getName());
 			throw new RuleRuntimeException(exception, serviceDef.getName(), rule.getClass().getName());
 		}

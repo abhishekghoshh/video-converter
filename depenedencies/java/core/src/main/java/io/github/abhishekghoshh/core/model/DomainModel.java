@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class DomainModel {
 
-	ObjectMapper objectMapper = new ObjectMapper();
 	private HttpServletRequest httpServletRequest;
 	private Map<String, String> requestHeaders;
 	private Map<String, List<String>> requestParams;

@@ -20,3 +20,8 @@ https://s01.oss.sonatype.org/content/repositories/snapshots/io/github/abhishekgh
 https://repo1.maven.org/maven2/io/github/abhishekghoshh/ -> for other version management
 https://central.sonatype.com/
 https://central.sonatype.com/artifact/io.github.abhishekghoshh/core/0.0.1/overview
+
+
+
+## redis connection with spring boot
+https://bytepitch.com/blog/redis-integration-spring-boot/

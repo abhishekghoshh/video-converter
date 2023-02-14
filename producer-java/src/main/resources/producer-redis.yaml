@@ -1,0 +1,22 @@
+reactor:
+  properties:
+    apidef:
+      redis-test-set:
+        active: true
+        path: /test/redis
+        method: POST
+        hasDefaultResponse: false
+        defaultResponse: '{}'
+        requestBodyClass: java.util.Map
+        servicedef:
+        - name: test-redis
+          classes:
+          - io.github.abhishekghoshh.producer.rule.RedisTest
+          strategy: SEQUENTIAL
+          endState: true
+redis:
+  connection:
+    host: localhost
+    port: 6379
+    password: 
+    connectTimeout: 10000

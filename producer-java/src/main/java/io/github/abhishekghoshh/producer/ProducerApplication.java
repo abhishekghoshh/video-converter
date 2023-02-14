@@ -5,10 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import io.github.abhishekghoshh.core.configuration.Reactor;
+import io.github.abhishekghoshh.redis.configuration.EnableRedis;
 
 @SpringBootApplication
 @EnableScheduling
 @Reactor
+@EnableRedis
 public class ProducerApplication {
 
 	public static void main(String[] args) {

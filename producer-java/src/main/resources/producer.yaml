@@ -1,6 +1,6 @@
 spring:
   profiles:
-    include: apidef
+    include: apidef,redis
 logging:
   pattern:
     console: "%d{dd-MM-yyyy HH:mm:ss.SSS}|%level|%logger.%M|%X{sid}|%X{uuid}|%X{uri}|%X{method}|%msg%n"

@@ -86,9 +86,15 @@ public class ControllerHandler {
 			domainModel = new DomainModel(httpServletRequest, apiDef.getRequestBodyClass());
 		else
 			domainModel = new DomainModel(httpServletRequest);
-		handlerService.handle(domainModel, apiDef.getServicedef());
-		if (null != domainModel.getResponseEntity())
-			return domainModel.getResponseEntity();
+		// handlerService.handle(domainModel, apiDef.getServicedef());
+		log.error("returning response is {}",
+				null != domainModel.getResponseEntity() ? domainModel.getResponseEntity().getBody() : "null");
+		if (null == domainModel.getResponseEntity()) {
+			Map<String, String> body = new HashMap<>();
+			body.put("name", "Abhishek Ghosh");
+			return ResponseEntity.ok(body);
+//			return domainModel.getResponseEntity();
+		}
 		if (apiDef.isHasDefaultResponse()) {
 			log.debug("no response set by the rules");
 			return ResponseEntity.noContent().build();

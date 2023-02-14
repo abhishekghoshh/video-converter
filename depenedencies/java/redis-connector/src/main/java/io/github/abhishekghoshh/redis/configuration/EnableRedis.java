@@ -14,5 +14,5 @@ import org.springframework.context.annotation.Import;
 @Documented
 @Import({ RedisConfiguration.class })
 @Configuration
-public @interface Reactor {
+public @interface EnableRedis {
 }

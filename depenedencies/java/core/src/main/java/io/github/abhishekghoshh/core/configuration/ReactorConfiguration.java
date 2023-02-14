@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportAware;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -58,6 +59,7 @@ public class ReactorConfiguration implements ImportAware, WebMvcConfigurer {
 	}
 
 	@Bean("coreObjectMapper")
+	@Primary
 	public ObjectMapper coreObjectMapper() {
 		return new ObjectMapper();
 	}
