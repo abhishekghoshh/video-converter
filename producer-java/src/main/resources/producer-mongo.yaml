@@ -1,0 +1,16 @@
+reactor:
+  properties:
+    apidef:
+      testMongo:
+        active: true
+        path: /test/mongo
+        method: POST
+        hasDefaultResponse: false
+        defaultResponse: '{}'
+        requestBodyClass: null
+        servicedef:
+        - name: mongotest
+          classes:
+          - io.github.abhishekghoshh.producer.rule.MongoTest
+          strategy: SEQUENTIAL
+          endState: true

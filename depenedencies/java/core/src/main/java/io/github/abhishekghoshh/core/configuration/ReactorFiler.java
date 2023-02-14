@@ -90,7 +90,7 @@ public class ReactorFiler implements Filter {
 		log.debug("Incoming headers for uuid {}", uuid);
 		Collections.list(httpServletRequest.getHeaderNames()).stream()
 				.forEach(headerName -> log.debug("{} -> {}", headerName, httpServletRequest.getHeader(headerName)));
-		chain.doFilter(request, response);
+		chain.doFilter(httpServletRequestWrapper, response);
 	}
 
 }

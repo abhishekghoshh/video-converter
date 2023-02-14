@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StreamUtils;
@@ -64,7 +65,7 @@ public class DomainModel {
 			Class<?> class_ = Class.forName(className);
 			this.requestBody = new ObjectMapper().readValue(inputStreamBytes, class_);
 		}
-		this.runtimeData = new HashMap<>();
+		this.runtimeData = new ConcurrentHashMap<>(16);
 	}
 
 	public HttpServletRequest getHttpServletRequest() {

@@ -48,6 +48,7 @@ public class RedisConfiguration implements ImportAware {
 				.connectTimeout(Duration.ofMillis(1000)).usePooling().build();
 		JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory(redisStandaloneConfiguration,
 				jedisClientConfiguration);
+		jedisConnectionFactory.afterPropertiesSet();
 		return jedisConnectionFactory;
 	}
 
@@ -57,7 +58,7 @@ public class RedisConfiguration implements ImportAware {
 		template.setConnectionFactory(jedisConnectionFactory);
 		template.setKeySerializer(new StringRedisSerializer());
 		template.setHashKeySerializer(new StringRedisSerializer());
-		template.setHashKeySerializer(new JdkSerializationRedisSerializer());
+		template.setHashValueSerializer(new JdkSerializationRedisSerializer());
 		template.setValueSerializer(new JdkSerializationRedisSerializer());
 		template.setEnableTransactionSupport(true);
 		template.afterPropertiesSet();
@@ -69,4 +70,5 @@ public class RedisConfiguration implements ImportAware {
 	public ObjectMapper redisObjectMapper() {
 		return new ObjectMapper();
 	}
+
 }

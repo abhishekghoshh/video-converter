@@ -5,9 +5,9 @@ reactor:
         active: true
         path: /test/redis
         method: POST
-        hasDefaultResponse: false
+        hasDefaultResponse: true
         defaultResponse: '{}'
-        requestBodyClass: java.util.Map
+        requestBodyClass: java.util.HashMap
         servicedef:
         - name: test-redis
           classes:
@@ -16,7 +16,7 @@ reactor:
           endState: true
 redis:
   connection:
-    host: localhost
+    host: 127.0.0.1
     port: 6379
-    password: 
+    password: I5k4kQdExcbYCTpDNQyzc6H7yQRWwuQM
     connectTimeout: 10000

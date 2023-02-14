@@ -15,16 +15,16 @@ public class RedisEntity implements Serializable {
 	 */
 	private static final long serialVersionUID = -5186324066701590738L;
 	@Id
-	private int id;
+	private String id;
 	private Object payload;
 	private String className;
-	private Date creationTimestamp;
+	private String creationTimestamp;
 
 	public RedisEntity() {
 		super();
 	}
 
-	public RedisEntity(int id, Object payload, String className, Date creationTimestamp) {
+	public RedisEntity(String id, Object payload, String className, String creationTimestamp) {
 		super();
 		this.id = id;
 		this.payload = payload;
@@ -32,22 +32,30 @@ public class RedisEntity implements Serializable {
 		this.creationTimestamp = creationTimestamp;
 	}
 
-	public RedisEntity(int id, Object payload) {
+	public RedisEntity(String id, Object payload) {
 		super();
 		if (null != payload) {
 			this.id = id;
 			this.payload = payload;
 			this.className = payload.getClass().getCanonicalName();
 		}
-		this.creationTimestamp = new Date();
+		this.creationTimestamp = new Date().toString();
 	}
 
-	public int getId() {
+	public RedisEntity(Object payload) {
+		this(RedisEntity.uniqueId(), payload);
+	}
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
+	}
+
+	public static String uniqueId() {
+		return UUID.randomUUID().toString();
 	}
 
 	public Object getPayload() {
@@ -66,11 +74,11 @@ public class RedisEntity implements Serializable {
 		this.className = className;
 	}
 
-	public Date getCreationTimestamp() {
+	public String getCreationTimestamp() {
 		return creationTimestamp;
 	}
 
-	public void setCreationTimestamp(Date creationTimestamp) {
+	public void setCreationTimestamp(String creationTimestamp) {
 		this.creationTimestamp = creationTimestamp;
 	}
 
