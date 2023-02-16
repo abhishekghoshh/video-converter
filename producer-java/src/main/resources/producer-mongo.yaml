@@ -14,3 +14,15 @@ reactor:
           - io.github.abhishekghoshh.producer.rule.MongoTest
           strategy: SEQUENTIAL
           endState: true
+spring-v2.data.mongodb.uri: mongodb+srv://Abhishek1640:Abhishek%401009@arc-reactor.k7tk4.mongodb.net/Duracell?retryWrites=true&w=majority
+spring:
+  data:
+    mongodb:
+      port: 27017
+      host: localhost
+      database: video-converter
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 200MB
+      max-request-size: 200MB

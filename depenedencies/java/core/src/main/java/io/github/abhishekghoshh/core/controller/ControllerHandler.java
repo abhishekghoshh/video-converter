@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 import org.springframework.web.util.pattern.PathPatternParser;
@@ -98,5 +100,9 @@ public class ControllerHandler {
 		}
 		log.debug("default response has set to true");
 		return ResponseEntity.internalServerError().build();
+	}
+
+	public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file, HttpServletRequest httpServletRequest) {
+		return null;
 	}
 }

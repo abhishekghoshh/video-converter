@@ -66,6 +66,8 @@ public class DomainModel {
 			this.requestBody = new ObjectMapper().readValue(inputStreamBytes, class_);
 		}
 		this.runtimeData = new ConcurrentHashMap<>(16);
+		
+		
 	}
 
 	public HttpServletRequest getHttpServletRequest() {

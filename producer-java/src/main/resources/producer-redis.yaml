@@ -20,3 +20,8 @@ redis:
     port: 6379
     password: I5k4kQdExcbYCTpDNQyzc6H7yQRWwuQM
     connectTimeout: 10000
+redis-v2:
+  connection:
+    hostName: redis-14147.c241.us-east-1-4.ec2.cloud.redislabs.com
+    port: 14147
+    password: I5k4kQdExcbYCTpDNQyzc6H7yQRWwuQM

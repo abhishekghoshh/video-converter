@@ -25,3 +25,6 @@ https://central.sonatype.com/artifact/io.github.abhishekghoshh/core/0.0.1/overvi
 
 ## redis connection with spring boot
 https://bytepitch.com/blog/redis-integration-spring-boot/
+
+## Spring boot connection mongodb
+https://medium.com/nerd-for-tech/file-upload-with-springboot-and-mongodb-76a8f5b9f75d

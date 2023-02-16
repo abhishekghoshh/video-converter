@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 public class ApiDef {
+	private String consumes;
+	private String produces;
 	private boolean active = true;
 	private String key;
 	private String path;
@@ -13,6 +15,7 @@ public class ApiDef {
 	private List<ServiceDef> servicedef;
 	private boolean hasDefaultResponse = false;
 	private String defaultResponse;
+	private String startStep;
 
 	public ApiDef(boolean active, String key, String path, RequestMethod method, String requestBodyClass,
 			List<ServiceDef> servicedef, boolean hasDefaultResponse, String defaultResponse) {

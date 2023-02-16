@@ -12,6 +12,7 @@ import io.github.abhishekghoshh.core.model.ApiDef;
 @Configuration
 @ConfigurationProperties("reactor.properties")
 public class ReactorDefination {
+	private String basePath = null;
 	private Map<String, ApiDef> apidef = new HashMap<>();
 	private Map<String, String> apiEntry = null;
 
